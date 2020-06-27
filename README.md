@@ -1,7 +1,18 @@
 # Churn-Prediction
-In this article, I discuss how to identify our beloved customers at a high risk of leaving us through implementing logistic regression and random forest models with Python. The practical case is about an E-learning platform’s user churn, while the modeling and code are generalizable to any business scenario dealing with churn prediction.
 
-What is churn and why churn prediction is important?
-Churn refers to the customers who have stopped coming back to our business. Identifying a particular customer at a high risk of churn, while there is still time to take intervention about it, is an essential task for every business. After all, attracting new customers can be five to twenty-five times more expensive than retaining existing ones, according to Harvard Business Review.
-Use case
-The basic idea of churn prediction is to construct a supervised learning model based on user data from the past. In this post, I will showcase the churn prediction step by step through a data science project I delivered for PositivePhysics. This is an E-learning platform for high school teachers to assign physics practices and assessments to their students. As it is the teacher who decides to use this platform, I will focus this project on identifying teachers’ potential churn.
+## Introduction
+
+Retaining existing customers is the most essential task for every business. With this project, I develop a model to identify customers at high risk of leaving us in their early lifecycle, i.e., churn, so that we can take interventions to retain the customers. 
+
+The basic idea of churn prediction is to construct a supervised learning model based on user data from the past. The data of this project is from an e-learning platform, i.e., PositivePhysics, which serves high school teachers to assign physics practices to their students online. 
+
+## Description 
+This repository documents the project step by step:
+•	A. Data Query.sql: query data from the company’s database;
+•	B. Feature Engineering.ipynb: prepare features for the prediction modeling;
+•	C. Modeling.ipynb: visualize data, select features, and get the model run!
+
+## Reports
+For a high level walk through of the modeling, please check the [blog](https://bit.ly/churn-prediction-eva-tian)
+For business insight and technical details, please check the slides: https://bit.ly/churn-prediction-slide-Eva-Tian
+
