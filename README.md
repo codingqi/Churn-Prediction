@@ -2,9 +2,10 @@
 
 ## Introduction
 
-Retaining existing customers is the most essential task for every business. With this project, I develop a model to identify customers at high risk of leaving us in their early lifecycle, i.e., churn, so that we can take interventions to retain the customers. 
+Retaining existing customers is an essential task for every business. With this project, I develop a model to identify customers at high risk of leaving us, i.e., churn, so that we can make interventions to retain the customers. 
 
 The basic idea of churn prediction is to construct a supervised learning model based on user data from the past. The data of this project is from an e-learning platform, i.e., PositivePhysics, which serves high school teachers to assign physics practices to their students online. 
+
 
 ## Description 
 This repository documents the project step by step:
@@ -20,5 +21,4 @@ For business insight and technical details, please check the [slides](https://bi
 ## Takeaways
 * Churn is predictable!
 * Go beyond prediction to generate actionable business insights!
-* Finding a clear path through the business ambiguity and getting the data ready are the most chanllenging parts, although modeling looks more sexy...
-
+* Finding a clear path through the business ambiguity and getting the data ready is way more challenging than modeling, although the later looks sexier :D
