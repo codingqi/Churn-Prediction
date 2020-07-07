@@ -1,10 +1,11 @@
 /* 
-Part A. Data Query
-I queried data from positive physics' database, and generated three csv files for next step's data engineering. 
-The three csv files are: teacher_info.csv, teacher_problem.csv, teacher_student.cvs.
+Data Query
+1. I queried data from positive physics' database, and generated three csv files for next step's data engineering. 
+The three csv files are: teacher_info.csv, teacher_problem.csv, teacher_student.csv, teacher_login_30.csv
 
-I also explored teachers' usage of the three levels. 
+2. I also explored teachers' usage of the three levels. 
 */
+-----------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
 --- teacher_info.csv
 --- teacher_info with  teachers' payment, state, login information, email, num_student
@@ -42,6 +43,7 @@ where a.user_id in (SELECT user_id FROM user_role_t WHERE role_id = 2)
 GROUP BY a.user_id, log_time);
 
 -----------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
 --- teacher_problem.csv tracks teachers activity through problem table
 create table teacher_problem as(
 SELECT 
@@ -55,8 +57,10 @@ FROM user_problem_t
 WHERE user_id IN (SELECT user_id FROM user_role_t WHERE role_id = 2)
 GROUP BY user_id, TIME); 
 
-
+-----------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
 --- teacher_student.csv identifies teacher and student relationship, and students' score/performance
+
 --- First, identify teacher_student pair. 
 DROP TABLE teacher_student; 
 create  TABLE teacher_student AS(
@@ -113,6 +117,80 @@ FROM student_score0 a
 LEFT JOIN teacher_student b
 ON b.student_id = a.student_id);
 
+
+
+
+-----------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+--- teacher_login_30.csv identifies teacher first 30 days' login behavior
+--- id, first_lot, last_log, age_days= last-first, churn = 1 if age_day<30, # of login first 30 days
+
+
+
+SELECT e.*, f.churn
+from
+(SELECT d.user_id, COUNT(log_date) AS num_log_30
+from
+(SELECT c.* from
+(SELECT a.*, b.first_log_30
+from
+(select user_id, left(insert_dtm, 10) as log_date
+from login_info_t
+where user_id in (SELECT user_id FROM user_role_t WHERE role_id = 2)
+GROUP BY user_id, log_date) a
+LEFT JOIN 
+(SELECT 
+	user_id, 
+	date_add(first_log, INTERVAL 30 day) AS first_log_30
+from
+(SELECT 
+	user_id, 
+	MIN(log_date) as first_log
+from
+(select user_id, left(insert_dtm, 10) as log_date
+from login_info_t
+where user_id in (SELECT user_id FROM user_role_t WHERE role_id = 2)
+GROUP BY user_id, log_date) a
+GROUP BY user_id) b) b
+ON a.user_id = b.user_id) c
+WHERE c.log_date<c.first_log_30) d
+GROUP BY d.user_id) e
+LEFT JOIN
+(SELECT 
+	user_id, 
+	(case when age_days<=30 then 1
+	ELSE 0 END) AS churn
+from
+(SELECT user_id, DATEDIFF(last_log, first_log) AS age_days 
+from
+(SELECT 
+	user_id, 
+	MIN(log_date) as first_log, 
+	max(log_date) as last_log
+from
+(select user_id, left(insert_dtm, 10) as log_date
+from login_info_t
+where user_id in (SELECT user_id FROM user_role_t WHERE role_id = 2)
+GROUP BY user_id, log_date) a
+GROUP BY user_id) b) c
+) f
+ON e.user_id = f.user_id
+where e.user_id in (SELECT b.user_id from
+(SELECT 
+	user_id, 
+	MIN(log_date) as first_log
+from
+(select user_id, left(insert_dtm, 10) as log_date
+from login_info_t
+where user_id in (SELECT user_id FROM user_role_t WHERE role_id = 2)
+GROUP BY user_id, log_date) a
+GROUP BY user_id) b
+WHERE b.first_log <'2020-01-01')
+
+
+
+
+-----------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------
 --- Users number by level
 --- Teachers
@@ -126,3 +204,6 @@ SELECT COUNT(DISTINCT user_id) AS num_teachers, LEVEL
 FROM user_level_t
 WHERE user_id IN  (SELECT user_id FROM user_role_t WHERE role_id = 3)
 GROUP BY LEVEL; 
+
+
+
