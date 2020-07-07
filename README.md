@@ -4,7 +4,7 @@
 
 Retaining existing customers is an essential task for every business. With this project, I develop a model to identify customers at high risk of leaving us, i.e., churn, so that we can make interventions to retain the customers. 
 
-The basic idea of churn prediction is to construct a supervised learning model based on user data from the past. The data of this project is from an e-learning platform, i.e., PositivePhysics, which serves high school teachers to assign physics practices to their students online. 
+The basic idea of churn prediction is to construct a supervised learning model based on user data from the past. The data of this project is from an e-learning platform, i.e., [PositivePhysics](https://www.positivephysics.org/), which serves high school teachers to assign physics practices to their students online. 
 
 
 ## Description 
